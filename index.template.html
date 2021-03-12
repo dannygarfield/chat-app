@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <table>
+        <tbody>
+            <tr><th>from</th>
+                <th>to</th>
+                <th>contents</th>
+            </tr>
+            $rows
+        </tbody>
+</table>
+
+<form action="/" method="post">
+    <label>sender<input name="sender" type="text"></label>
+    <label>recipient<input name="recipient" type="text"></label>
+    <label>message<input name="contents"></label>
+    <input type="submit">
+</form>
+
+<script>
+    // setTimeout(() => {location.reload()}, 10000)
+    // Jordan wrote the following: followed from mozilla ws documentation
+    ws = new WebSocket("ws://localhost:8080/reloader")
+    ws.onopen = () => { console.log("websocket established") }
+    ws.onmessage = (event) => {
+        console.log("got message from server", event)
+        if (event.data === "new chat") {
+            console.log("reloading...")
+            window.location.reload()
+        }
+    }
+</script>
+</body>
